@@ -123,7 +123,7 @@ Matrix *read_matrix(char *filename)
     int curr_line = 0;
     while (getline(&buffer, &len, file) != -1)
     {
-        for (ssize_t i = 0; i < 5; i++)
+        for (ssize_t i = 0; i < cols; i++)
         {
             sscanf(buffer, "%f", &MAT_AT(m, curr_line, i));
             while (*buffer != ' ' && *buffer != '\0')
