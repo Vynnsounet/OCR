@@ -1,5 +1,6 @@
 #ifndef MATLIB_H
 #define MATLIB_H
+#include <time.h>
 
 #define MAT_AT(m, i, j) (m)->entries[(i) * (m)->columns + (j)]
 typedef struct
@@ -11,6 +12,8 @@ typedef struct
 } Matrix;
 
 float randfloat(float a, float b);
+
+void rand_mat(Matrix *a, float l, float h);
 
 Matrix *alloc_matrix(int r, int c);
 

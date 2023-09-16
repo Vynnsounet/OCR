@@ -16,7 +16,6 @@ Matrix *alloc_matrix(int r, int c)
 
 float randfloat(float a, float b)
 {
-    srand(time(NULL));
     return (float)rand() / ((float)RAND_MAX / (b - a)) + a;
 }
 
@@ -60,9 +59,20 @@ void apply_func(Matrix *a, float (*func)(float))
 {
     for (int i = 0; i < a->columns; ++i)
     {
-        for (int j = 0; i < a->rows; ++j)
+        for (int j = 0; j < a->rows; ++j)
         {
             MAT_AT(a, i, j) = func(MAT_AT(a, i, j));
+        }
+    }
+}
+
+void rand_mat(Matrix *a, float l, float h)
+{
+    for (int i = 0; i < a->rows; ++i)
+    {
+        for (int j = 0; j < a->columns; ++j)
+        {
+            MAT_AT(a, i, j) = randfloat(l, h);
         }
     }
 }
@@ -164,6 +174,3 @@ void write_matrix(Matrix *m, char *filename)
 
     fclose(file);
 }
-
-// TODO
-//  write a matrix to a file (return nothing)
