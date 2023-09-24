@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -std=c11
-LDFLAGS = -lSDL2 -lSDL2_image
+LDFLAGS = -lSDL2 -lSDL2_image -lm
 
 SRC = main.c
 OBJ = $(SRC:.c=.o)
@@ -17,5 +17,6 @@ $(EXECUTABLE): $(OBJ)
 
 clean:
 	rm -f $(OBJ) $(EXECUTABLE)
+	rm -f *.bmp
 
 .PHONY: all clean
