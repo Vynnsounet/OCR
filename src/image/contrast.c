@@ -13,7 +13,6 @@ double calculateContrastFactor(SDL_Surface *surface, double targetContrast) {
     double originalContrast = 0.0;
     double sum = 0.0;
 
-    // Calculate the average pixel value
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             Uint8 *pixel = (Uint8 *)(surface->pixels) + y * surface->pitch + x * surface->format->BytesPerPixel;
@@ -22,7 +21,6 @@ double calculateContrastFactor(SDL_Surface *surface, double targetContrast) {
     }
     double average = sum / numPixels;
 
-    // Calculate the original contrast (standard deviation)
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             Uint8 *pixel = (Uint8 *)(surface->pixels) + y * surface->pitch + x * surface->format->BytesPerPixel;
@@ -32,7 +30,7 @@ double calculateContrastFactor(SDL_Surface *surface, double targetContrast) {
     }
     originalContrast = sqrt(originalContrast / numPixels);
 
-    // Calculate the factor needed to achieve the target contrast
+    
     double factor = targetContrast/originalContrast;
 
     if (factor < 0.1) {

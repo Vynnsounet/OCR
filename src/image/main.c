@@ -4,7 +4,7 @@
 #include "includes/image.h"
 #include "includes/threshold.h"
 #include "includes/contrast.h"
-
+#include "includes/Sobel.h"
 void xmul(size_t k, float array[k][k], float x)
 {
     for (size_t i = 0; i < k; ++i)
@@ -31,7 +31,7 @@ int main()
         return 1;
     }
 
-    SDL_Surface *original_image = load_image("pictures/image06");
+    SDL_Surface *original_image = load_image("pictures/image02");
 
     if (original_image == NULL)
     {
@@ -41,16 +41,18 @@ int main()
     float mat[5][5] = {{2, 4, 5, 4, 2}, {4, 9, 12, 9, 4}, {5, 12, 15, 12, 5}, {4, 9, 12, 9, 4}, {2, 4, 5, 4, 2}};
     xmul(5, mat, (float)(1.0 / 159.0));
     grayscale(original_image);
-    save_image(original_image, "grayscale_image.bmp");
+    save_image(original_image, "grayscale.bmp");
     convolution(original_image, 5, mat);
-    save_image(original_image, "convoluted_image.bmp");
-    reduceContrast(original_image, 1.8);
-    save_image(original_image, "contrast.bmp");
+    save_image(original_image, "gauss.bmp");
+    Sobel(original_image);
+    save_image(original_image, "sobel.bmp");
+    //reduceContrast(original_image, 1.8);
+    //save_image(original_image, "contrast.bmp");
 
-    Uint8 otsuThreshold = calculateOtsuThreshold(original_image);
-    binarize(original_image, otsuThreshold);
+    //Uint8 otsuThreshold = calculateOtsuThreshold(original_image);
+    //binarize(original_image, otsuThreshold);
 
-    save_image(original_image, "binarized_image.bmp");
+    //save_image(original_image, "binarized_image.bmp");
 
     SDL_FreeSurface(original_image);
     IMG_Quit();
