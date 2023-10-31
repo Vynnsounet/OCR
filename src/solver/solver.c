@@ -1,35 +1,44 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h> 
 
 typedef unsigned char Sudoku[9][9];
 
-void parse_sudoku_entry(char *entry, unsigned char sudoku_line[9])
+FILE* parse_load_sudoku(FILE *file, Sudoku sudoku)
 {
-    size_t arr_index = 0;
-    for (size_t i = 0; entry[i] != 0; ++i)
+    size_t col = 0;
+    size_t line = 0;
+    char c = fgetc(file);
+    while(c != EOF && (line < 9))
     {
-        if (entry[i] != ' ')
+        if(c != ' ' && c != '\n')
         {
-            sudoku_line[arr_index] = entry[i] == '.' ? 0 : entry[i] - '0';
-            arr_index++;
+            if(c == '.')
+            {
+                sudoku[line][col] = '0';
+                col += 1;
+            }
+            
+            else
+            {
+                sudoku[line][col] = c;
+                col+=1;
+            }
+        
         }
+        if(col % 9 == 0 && col != 0 )
+        {
+            line+= 1;
+            col = 0;
+        }
+        
+        c = fgetc(file);
+    
     }
-}
-
-FILE *load_sudoku(FILE *file, Sudoku s)
-{
-    char *buffer;
-    int currline = 0;
-    size_t len = 0;
-    while (getline(&buffer, &len, file))
-    {
-        if (*buffer == '\n')
-            break;
-        parse_sudoku_entry(buffer, s[currline]);
-        currline++;
-    }
+    
     return file;
+    
 }
 
 void print_grid(Sudoku s)
@@ -38,7 +47,7 @@ void print_grid(Sudoku s)
     {
         for (size_t j = 0; j < 9; j++)
         {
-            printf("%d ", s[i][j]);
+            printf("%c ", s[i][j]);
         }
         printf("\n");
     }
@@ -46,16 +55,24 @@ void print_grid(Sudoku s)
 
 int find_next_zero(Sudoku s, size_t *row, size_t *col)
 {
-    for (*row = 0; *row < 9; (*row)++)
-    {
-        for (*col = 0; *col < 9; (*col)++)
+     while (*row < 9 && *col < 9)
+     {
+       
+        if (s[*row][*col] == '0')
         {
-            if (s[*row][*col] == 0)
-            {
-                return 1; // Found an empty cell.
-            }
+            return 1; // Found an empty cell.
+        } 
+        
+        if(*col == 8)
+        {
+            *row += 1;
+            *col = 0;
         }
-    }
+        else
+        {
+            *col+=1;
+        }
+     }
     return 0; // No empty cells found; the puzzle is solved.
 }
 
@@ -76,7 +93,7 @@ int is_in_square(Sudoku s, size_t i, size_t j, unsigned char e)
 
 int check_legal(Sudoku s, size_t i, size_t j, unsigned char e)
 {
-    if (is_in_square(s, i, j, e))
+    if (is_in_square(s, i, j, e) == 1)
         return 0;
 
     for (size_t l = 0; l < 9; l++)
@@ -89,29 +106,33 @@ int check_legal(Sudoku s, size_t i, size_t j, unsigned char e)
 
 int solve_sudoku(Sudoku s)
 {
-    size_t row, col;
+    size_t row =0;
+    size_t col = 0;
 
-    if (!find_next_zero(s, &row, &col))
+    if (find_next_zero(s, &row, &col) == 0)
     {
-        return 1; // All cells filled, puzzle solved.
+        return EXIT_SUCCESS; // All cells filled, puzzle solved.
     }
 
-    for (unsigned char num = 1; num <= 9; num++)
+    for (unsigned char num = '1'; num <= '9'; num++)
     {
-        if (check_legal(s, row, col, num))
+        if (check_legal(s, row, col, num) == 1)
         {
             s[row][col] = num;
 
-            if (solve_sudoku(s))
+            if (solve_sudoku(s) == EXIT_SUCCESS)
             {
-                return 1;
+                return EXIT_SUCCESS;
             }
-
-            s[row][col] = 0;
+            else 
+            {
+                s[row][col] = '0';
+            }
+            
         }
     }
 
-    return 0;
+    return EXIT_FAILURE;
 }
 
 void write_sudoku(FILE *file, Sudoku s)
@@ -120,12 +141,22 @@ void write_sudoku(FILE *file, Sudoku s)
     {
         for (size_t j = 0; j < 9; j++)
         {
-            fprintf(file, "%d", s[i][j]);
-            if (!j % 3)
-                fprintf(file, " ");
+            fprintf(file, "%c", s[i][j]);
+            fprintf(file, " ");
         }
         fprintf(file, "\n");
     }
+}
+void init_sudoku(Sudoku s)
+{
+    for (size_t i = 0; i < 9; i++)
+    {
+        for (size_t j = 0; j < 9; j++)
+        {
+           s[i][j] = '0';
+        }
+    }
+
 }
 
 int main(int argc, char **argv)
@@ -136,15 +167,19 @@ int main(int argc, char **argv)
         return 1;
     }
     FILE *file = fopen(argv[1], "r");
-    FILE *out = fopen("sudoku_solved.txt", "w");
+    FILE *out = fopen("sudoku_solved.result", "w");
     Sudoku s;
-    while (file)
+    init_sudoku(s);
+    file = parse_load_sudoku(file, s);
+    FILE* test = fopen("test.txt", "w");
+    write_sudoku(test, s);
+    if(solve_sudoku(s) == EXIT_SUCCESS)
     {
-        file = load_sudoku(file, s);
-        if (solve_sudoku(s))
-            write_sudoku(out, s);
-        else
-            printf("Couldn't solve sudoku");
+    	write_sudoku(out, s);
+    }
+    else 
+    {
+        printf("Pas resolvable\n");
     }
     fclose(file);
     fclose(out);
