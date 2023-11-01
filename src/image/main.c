@@ -38,21 +38,21 @@ int main()
         SDL_Quit();
         return 1;
     }
-    float mat[5][5] = {{2, 4, 5, 4, 2}, {4, 9, 12, 9, 4}, {5, 12, 15, 12, 5}, {4, 9, 12, 9, 4}, {2, 4, 5, 4, 2}};
-    xmul(5, mat, (float)(1.0 / 159.0));
+    float gauss[5][5] = {{2, 4, 5, 4, 2}, {4, 9, 12, 9, 4}, {5, 12, 15, 12, 5}, {4, 9, 12, 9, 4}, {2, 4, 5, 4, 2}};
+    xmul(5, gauss, (float)(1.0 / 159.0));
     grayscale(original_image);
     save_image(original_image, "grayscale.bmp");
-    convolution(original_image, 5, mat);
+    convolution(original_image, 5, gauss);
     save_image(original_image, "gauss.bmp");
-    Sobel(original_image);
+    sobel(original_image);
     save_image(original_image, "sobel.bmp");
     //reduceContrast(original_image, 1.8);
     //save_image(original_image, "contrast.bmp");
 
     //Uint8 otsuThreshold = calculateOtsuThreshold(original_image);
-    //binarize(original_image, otsuThreshold);
+    binarize(original_image, 200);
 
-    //save_image(original_image, "binarized_image.bmp");
+    save_image(original_image, "binarized_image.bmp");
 
     SDL_FreeSurface(original_image);
     IMG_Quit();

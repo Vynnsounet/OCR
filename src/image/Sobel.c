@@ -10,12 +10,12 @@ double Convolution(SDL_Surface* image, double kernel[3][3], int row, int col)
     {
         for (int j = 0; j < 3; j++)
         {
-            int x = i + row;
-            int y = j + col;
-            if (x >= 0 && y >= 0 && x < (int)image->h
-                && y < (int)image->w)
+            int x = i + col;
+            int y = j + row;
+            if (x >= 0 && y >= 0 && x < (int)image->w
+                && y < (int)image->h)
             {
-                Uint8 *pixel = (Uint8 *)(image->pixels) + x * image->pitch + y * image->format->BytesPerPixel;
+                Uint8 *pixel = (Uint8 *)(image->pixels) + y * image->pitch + x * image->format->BytesPerPixel;
                 sum += pixel[0] * kernel[i][j];
             }
         }
@@ -23,7 +23,7 @@ double Convolution(SDL_Surface* image, double kernel[3][3], int row, int col)
 
     return sum;
 }
-void Sobel(SDL_Surface* image)
+void sobel(SDL_Surface* image)
 {
 
     double gx, gy;
@@ -36,18 +36,20 @@ void Sobel(SDL_Surface* image)
                               { 0.0, 0.0, 0.0 },
                               { 1.0, 2.0, 1.0 } };
 
-    for (int y = 0; y < image->h; y++)
+    for (int i = 0; i < image->h; i++)
     {
-        for (int x = 0; x < image->w; x++)
+        for (int j = 0; j < image->w; j++)
         {
-            gx = Convolution(image, kx, x, y);
-            gy = Convolution(image, ky, x, y);
+            gx = Convolution(image, kx, i, j);
+            gy = Convolution(image, ky, i, j);
             g = sqrt(gx * gx + gy * gy);
-            Uint8 *pixel = (Uint8 *)(image->pixels) + y * image->pitch + x * image->format->BytesPerPixel;
-            pixel[0] = (Uint8)(g>128 ? 255: 0);
-            pixel[1] = (Uint8)(g>128 ? 255: 0);
-            pixel[2] = (Uint8)(g>128 ? 255: 0);
 
+            Uint8 *pixel = (Uint8 *)(image->pixels) + i * image->pitch + j * image->format->BytesPerPixel;
+            Uint8 new_color = (Uint8)(g > 128 ? 255 : 0);
+
+            pixel[0] = new_color;
+            pixel[1] = new_color;
+            pixel[2] = new_color;
         }
     }
     

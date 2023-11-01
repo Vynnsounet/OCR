@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-void Sobel(SDL_Surface* image);
+void sobel(SDL_Surface* image);
 
 #endif // SOBEL_H
 
