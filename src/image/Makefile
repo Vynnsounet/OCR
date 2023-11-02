@@ -38,4 +38,3 @@ $(OBJ_DIR)/main.o: includes/image.h includes/image_op.h
 $(OBJ_DIR)/threshold.o: includes/threshold.h
 $(OBJ_DIR)/contrast.o: includes/contrast.h includes/image_op.h
 $(OBJ_DIR)/Sobel.o: includes/Sobel.h
-$(OBJ_DIR)/segmentation.o: includes/segmentation.h
