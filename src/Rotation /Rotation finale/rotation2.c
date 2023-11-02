@@ -168,7 +168,7 @@ int main(int argc, char** argv)
     SDL_Surface* s =load_image(argv[1]);
     
      
-    SDL_Surface* new_image = rotation(argv[2], s);
+    SDL_Surface* new_image = rotation(atof(argv[2]), s);
      
      
     IMG_SavePNG(new_image, "Test.png");

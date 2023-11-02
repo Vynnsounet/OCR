@@ -19,5 +19,5 @@ rotation: rotation2.o
 clean:
 	${RM} ${OBJ}
 	${RM} ${EXE}
-
+	rm *.png
 # END
