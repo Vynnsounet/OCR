@@ -3,4 +3,5 @@ all:
 
 clean:
 	rm solver
+	rm *.result
 

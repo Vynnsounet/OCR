@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h> 
+#include <string.h>
 
 typedef unsigned char Sudoku[9][9];
 
@@ -84,7 +85,7 @@ int is_in_square(Sudoku s, size_t i, size_t j, unsigned char e)
     {
         for (size_t jj = maxC; jj < maxC + 3; jj++)
         {
-            if (e == s[ii][jj])
+            if (e == s[ii][jj] && (ii != i && jj != j))
                 return 1;
         }
     }
@@ -98,7 +99,7 @@ int check_legal(Sudoku s, size_t i, size_t j, unsigned char e)
 
     for (size_t l = 0; l < 9; l++)
     {
-        if (e == s[i][l] || e == s[l][j])
+        if ((e == s[i][l] && l != j) ||( e == s[l][j] && l != i))
             return 0;
     }
     return 1;
@@ -124,11 +125,7 @@ int solve_sudoku(Sudoku s)
             {
                 return EXIT_SUCCESS;
             }
-            else 
-            {
                 s[row][col] = '0';
-            }
-            
         }
     }
 
@@ -158,7 +155,23 @@ void init_sudoku(Sudoku s)
     }
 
 }
-
+int check_grid(Sudoku s)
+{
+    for(size_t i = 0 ; i < 9; i++)
+    {
+        for(size_t j =0; j< 9; j++)
+	{
+            if(s[i][j] != '0')
+	    {
+                if(check_legal(s, i, j, s[i][j]) == 0)
+		{
+                    return 1;
+		}
+	    }
+	}
+    }
+    return 0;
+}
 int main(int argc, char **argv)
 {
     if (argc != 2)
@@ -167,21 +180,24 @@ int main(int argc, char **argv)
         return 1;
     }
     FILE *file = fopen(argv[1], "r");
-    FILE *out = fopen("sudoku_solved.result", "w");
     Sudoku s;
     init_sudoku(s);
     file = parse_load_sudoku(file, s);
-    FILE* test = fopen("test.txt", "w");
-    write_sudoku(test, s);
-    if(solve_sudoku(s) == EXIT_SUCCESS)
+    if(check_grid(s) == 1)
     {
+        printf("Le sudoku n'est pas resolvable.\n");
+    }
+    else  if(solve_sudoku(s) == EXIT_SUCCESS)
+    {
+	char* name = strcat(argv[1], ".result");
+	FILE*out = fopen(name , "w");
     	write_sudoku(out, s);
+	fclose(out);
     }
     else 
     {
         printf("Pas resolvable\n");
     }
     fclose(file);
-    fclose(out);
     return 0;
 }
