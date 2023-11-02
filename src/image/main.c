@@ -5,6 +5,7 @@
 #include "includes/threshold.h"
 #include "includes/contrast.h"
 #include "includes/Sobel.h"
+#include "includes/segmentation.h"
 void xmul(size_t k, float array[k][k], float x)
 {
     for (size_t i = 0; i < k; ++i)
@@ -42,10 +43,14 @@ int main()
     xmul(5, gauss, (float)(1.0 / 159.0));
     grayscale(original_image);
     save_image(original_image, "grayscale.bmp");
+
     convolution(original_image, 5, gauss);
+
     save_image(original_image, "gauss.bmp");
+    reduceContrast(original_image, 50);
     sobel(original_image);
     save_image(original_image, "sobel.bmp");
+
     //reduceContrast(original_image, 1.8);
     //save_image(original_image, "contrast.bmp");
 
@@ -53,6 +58,9 @@ int main()
     binarize(original_image, 200);
 
     save_image(original_image, "binarized_image.bmp");
+
+    //keepLargestComponent(original_image);
+    //save_image(original_image, "crop.bmp");
 
     SDL_FreeSurface(original_image);
     IMG_Quit();
