@@ -139,9 +139,16 @@ void write_sudoku(FILE *file, Sudoku s)
         for (size_t j = 0; j < 9; j++)
         {
             fprintf(file, "%c", s[i][j]);
-            fprintf(file, " ");
+            if(j == 2 || j == 5)
+	    {
+	        fprintf(file, " ");
+	    }
         }
         fprintf(file, "\n");
+	if(i == 2 || i == 5)
+	{
+            fprintf(file, "\n");
+	}
     }
 }
 void init_sudoku(Sudoku s)
