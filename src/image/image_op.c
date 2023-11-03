@@ -67,7 +67,7 @@ void convolution(SDL_Surface *image, size_t k, float matrix[k][k])
                 for (size_t xk = 0; xk < k; xk++)
                 {
                     Uint8 red, green, blue, alpha;
-                    Uint32 pixel = get_pixel(image, y - 1 + yk, x - 1 + xk);
+                    Uint32 pixel = get_pixel(image, y - k/2 + yk, x - k/2 + xk);
                     SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
                     acc += red * matrix[yk][xk];
                 }

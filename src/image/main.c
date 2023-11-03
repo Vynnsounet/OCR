@@ -31,7 +31,7 @@ int main()
         return 1;
     }
 
-    SDL_Surface *original_image = load_image("pictures/image02");
+    SDL_Surface *original_image = load_image("pictures/image01");
 
     if (original_image == NULL)
     {
@@ -57,9 +57,6 @@ int main()
     binarize(original_image, 200);
 
     save_image(original_image, "binarized_image.bmp");
-
-    //keepLargestComponent(original_image);
-    //save_image(original_image, "crop.bmp");
 
     SDL_FreeSurface(original_image);
     IMG_Quit();
