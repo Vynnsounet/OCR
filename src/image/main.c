@@ -53,15 +53,15 @@ int main(int argc, char** argv)
 	convolution(original_image, 5, gauss);
 
 	save_image(original_image, "gauss.bmp");
+
 	reduceContrast(original_image, 40);
-	//sobel(original_image);
-	//save_image(original_image, "sobel.bmp");
 
 	//reduceContrast(original_image, 50);
 	//save_image(original_image, "contrast.bmp");
 	sobel(original_image);
 	save_image(original_image, "sobel.bmp");
 	//Uint8 otsuThreshold = calculateOtsuThreshold(original_image);
+	
 
 	SDL_FreeSurface(original_image);
 	IMG_Quit();

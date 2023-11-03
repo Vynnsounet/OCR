@@ -58,5 +58,5 @@ Uint8 calculateOtsuThreshold(SDL_Surface *image)
         }
     }
 
-    return threshold;
+    return threshold-30;
 }
