@@ -7,7 +7,7 @@ SDL_Surface *load_image(char *filename)
     SDL_Surface *image = IMG_Load(filename);
     if (image == NULL)
     {
-        printf("Nope");
+        printf("The file does not exist\n");
     }
     return image;
 }

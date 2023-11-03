@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Iincludes -Wextra
+CFLAGS = -Wall -Iincludes -Wextra -g
 LDFLAGS = -lSDL2 -lSDL2_image -lm
 
 SRC_DIR = .
@@ -9,7 +9,7 @@ SRC = $(wildcard $(SRC_DIR)/*.c)
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
-EXECUTABLE = my_program
+EXECUTABLE = process
 
 all: $(EXECUTABLE)
 

@@ -7,5 +7,4 @@
 SDL_Surface *load_image(char *filename);
 void save_image(SDL_Surface *image, const char *filename);
 
-#endif // IMAGE_H
-
+#endif

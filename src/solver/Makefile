@@ -3,5 +3,5 @@ all:
 
 clean:
 	rm solver
-	rm *.result
+	rm grid/*.result
 

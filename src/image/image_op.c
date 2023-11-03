@@ -3,12 +3,12 @@
 
 Uint32 get_pixel(SDL_Surface *image, int y, int x)
 {
-    return *((Uint32 *)((Uint8 *)image->pixels + y * image->pitch + x * 4));
+    return *((Uint32 *)((Uint8 *)image->pixels + y * image->pitch + x * image->format->BytesPerPixel));
 }
 
 void put_pixel(SDL_Surface *image, int y, int x, Uint32 rgba)
 {
-    *((Uint32 *)((Uint8 *)image->pixels + y * image->pitch + x * 4)) = rgba;
+    *((Uint32 *)((Uint8 *)image->pixels + y * image->pitch + x * image->format->BytesPerPixel)) = rgba;
 }
 
 
@@ -19,13 +19,13 @@ void grayscale(SDL_Surface *image)
         for (int x = 0; x < image->w; x++)
         {
 
-            Uint8 red, green, blue;
+            Uint8 red, green, blue, alpha;
             Uint32 pixel = get_pixel(image, y, x);
-            SDL_GetRGB(pixel, image->format, &red, &green, &blue);
+            SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
 
             Uint8 gray = (Uint8)(0.3 * red + 0.58 * green + 0.11 * blue);
 
-            put_pixel(image, y, x, SDL_MapRGB(image->format, gray, gray, gray));
+            put_pixel(image, y, x, SDL_MapRGBA(image->format, gray, gray, gray, alpha));
         }
     }
 }
@@ -55,17 +55,22 @@ void binarize(SDL_Surface *image, Uint8 treshold)
         }
     }
 }
-void convolution(SDL_Surface *image, size_t k, float matrix[k][k])
+
+void convolution(SDL_Surface *image, int k, double matrix[k][k])
 {
-    for (size_t y = k / 2; y < (image->h) - k / 2; y++)
+    for (int y = 0; y < (image->h); y++)
     {
-        for (size_t x = k / 2; x < (image->w) - k / 2; x++)
+        for (int x = 0; x < (image->w); x++)
         {
             Uint8 acc = 0;
-            for (size_t yk = 0; yk < k; yk++)
+            for (int yk = 0; yk < k; yk++)
             {
-                for (size_t xk = 0; xk < k; xk++)
+		if (y - k/2 + yk<=0 || y - k/2 +yk>=image->h)
+			continue;
+                for (int xk = 0; xk < k; xk++)
                 {
+			if (x - k/2 + xk<=0 ||( x - k/2 +xk)>=image->w)
+				continue;
                     Uint8 red, green, blue, alpha;
                     Uint32 pixel = get_pixel(image, y - k/2 + yk, x - k/2 + xk);
                     SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);

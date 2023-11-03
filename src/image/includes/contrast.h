@@ -9,5 +9,4 @@
 
 void reduceContrast(SDL_Surface *surface, double factor);
 
-#endif /* CONTRAST_H */
-
+#endif

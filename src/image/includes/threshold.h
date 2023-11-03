@@ -6,5 +6,4 @@
 
 Uint8 calculateOtsuThreshold(SDL_Surface *image);
 
-#endif // THRESHOLD_H
-
+#endif
