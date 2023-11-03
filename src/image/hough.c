@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include "includes/image_op.h"
 
 
 void HoughTransform(SDL_Surface *image, SDL_Renderer* renderer)
@@ -32,7 +33,7 @@ void HoughTransform(SDL_Surface *image, SDL_Renderer* renderer)
 
     for (int rho = 0; rho < len; rho++) {
         for (int theta = 0; theta < 180; theta++) {
-            if (accumulator[rho][theta] >= SEUIL) {
+            if (accumulator[rho][theta] >= 100) {
 
                 double thetaRad = theta * M_PI / 180.0;
                 int x1 = (int)(rho * cos(thetaRad));
