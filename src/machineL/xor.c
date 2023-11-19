@@ -7,6 +7,10 @@ float td_xor[] = {
 
 float td_or[] = {
     0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1,
+
+};
+float td_nand[] = {
+    0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0,
 };
 
 int main(void)
@@ -35,7 +39,7 @@ int main(void)
     float rate = 1e-1;
 
     printf("cost = %f\n", nn_cost(nn, ti, to));
-    for (size_t i = 0; i < 100 * 1000; ++i)
+    for (size_t i = 0; i < 10 * 10000; ++i)
     {
         nn_finite_diff(nn, g, eps, ti, to);
         nn_learn(nn, g, rate);

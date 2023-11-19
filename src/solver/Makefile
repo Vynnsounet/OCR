@@ -2,6 +2,5 @@ all:
 	gcc -Wall -Wextra -g solver.c -o solver
 
 clean:
-	rm solver
-	rm grid/*.result
+	rm -f solver *.result
 

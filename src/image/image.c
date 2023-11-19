@@ -1,7 +1,6 @@
 #include "includes/image.h"
 
 
-
 SDL_Surface *load_image(char *filename)
 {
     SDL_Surface *image = IMG_Load(filename);
