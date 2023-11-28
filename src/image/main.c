@@ -51,9 +51,9 @@ int main(int argc, char** argv)
 	grayscale(original_image);
 	save_image(original_image, "grayscale.bmp");
 
-	convolution(original_image, 5, gauss);
+	//convolution(original_image, 5, gauss);
 
-	save_image(original_image, "gauss.bmp");
+	//save_image(original_image, "gauss.bmp");
 
 	reduceContrast(original_image, 40);
 
