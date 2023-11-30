@@ -6,6 +6,7 @@
 #include "includes/contrast.h"
 #include "includes/Sobel.h"
 #include "includes/hough.h"
+#include "includes/segmentation.h"
 void xmul(size_t k, double array[k][k], float x)
 {
     for (size_t i = 0; i < k; ++i)
@@ -64,7 +65,9 @@ int main(int argc, char** argv)
 	//Uint8 otsuThreshold = calculateOtsuThreshold(original_image);
 
 	HoughTransform(original_image);
-	save_image(original_image, "hough.bmp");	
+	save_image(original_image, "hough.bmp");
+    detection(original_image);
+    save_image(original_image, "detection.bmp");
 
 	SDL_FreeSurface(original_image);
 	IMG_Quit();
