@@ -2,9 +2,9 @@
 #include "includes/image_op.h"
 #include "includes/hough.h"
 #include <math.h>
-#include <time.h>
 #include <stdio.h>
-
+#include "includes/image.h"
+#include "includes/segmentation.h"
 void printArray(int* array, int length) {
     if (array == NULL || length <= 0) {
         printf("Invalid array\n");
@@ -39,7 +39,7 @@ int *positions(int *array, int *length, double average)
     free(array);
     return pos;
 }
-int* filterByWeightedAverageDistance(int xpositions[], int n, double uncertainty, double threshold, int *filteredCount,double *weightedAverageDistance) {
+int* filter(int xpositions[], int n, double uncertainty, double threshold, int *filteredCount,double *weightedAverageDistance) {
     double *distances = malloc((n - 1) * sizeof(double));
     for (int i = 0; i < n - 1; ++i) {
         distances[i] = abs(xpositions[i + 1] - xpositions[i]);
@@ -301,9 +301,9 @@ void detection(SDL_Surface *image, SDL_Surface *seg)
     double averagey = 0;
     printf("jid\n");
 
-    int* cx = filterByWeightedAverageDistance( coordx, countx, 7, 20,&counterx, &averagex);
+    int* cx = filter( coordx, countx, 7, 20,&counterx, &averagex);
     printArray(cx, counterx);
-    int* cy = filterByWeightedAverageDistance(coordy, count, 7, 20, &countery, &averagey);
+    int* cy = filter(coordy, count, 7, 20, &countery, &averagey);
     if(!cx || !cy)
         return;
     for (int y = 0; y < image->h; y++) {
@@ -317,15 +317,34 @@ void detection(SDL_Surface *image, SDL_Surface *seg)
             }
         }
     }
+    segmentation(seg, cx, cy);
     free(cx);
     free(cy);
 }
 
 void segmentation(SDL_Surface *image, int* xpos, int* ypos){
-    for (int y = 0; y < image->h ; y++) {
-        for (int x = 0; x < image->w; x++) {
+    char* str = malloc(11*sizeof(char));
+    for (int y = 0; y < 9; y++) {
+        for (int x = 0; x < 9; x++) {
+            int x1 = xpos[x];
+            int y1 = ypos[y];
+            int x2 = xpos[x+1];
+            int y2 = ypos[y+1];
+            int width = x2 - x1;
+            int height = y2 - y1;
+            SDL_Surface* cropped = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
 
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    Uint32 pixel = get_pixel(image, i+y1 , x1+j);
+                    put_pixel(cropped, i , j, pixel);
+                }
+            }
+            sprintf(str, "cropped/%d-%d", y+1 , x+1);
+            save_image(cropped, str);
+            SDL_FreeSurface(cropped);
         }
-        
+
     }
+    free(str);
 }

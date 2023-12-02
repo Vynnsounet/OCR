@@ -25,6 +25,7 @@ $(OBJ_DIR):
 .PHONY: clean
 clean:
 	rm -rf $(OBJ_DIR) $(EXECUTABLE)
+	rm cropped/*
 	rm *.bmp
 
 .PHONY: run
