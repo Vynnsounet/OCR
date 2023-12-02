@@ -40,36 +40,39 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	SDL_Surface *original_image = load_image(argv[1]);
+	SDL_Surface *hough = load_image(argv[1]);
+	SDL_Surface *seg = load_image(argv[1]);
 
-	if (original_image == NULL)
+	if (!hough || !seg)
 	{
 		SDL_Quit();
 		return 1;
 	}
 	double gauss[5][5] = {{2, 4, 5, 4, 2}, {4, 9, 12, 9, 4}, {5, 12, 15, 12, 5}, {4, 9, 12, 9, 4}, {2, 4, 5, 4, 2}};
 	xmul(5, gauss, (double)(1.0 / 159.0));
-	grayscale(original_image);
-	save_image(original_image, "grayscale.bmp");
+	grayscale(hough);
+	save_image(hough, "grayscale.bmp");
 
-	//convolution(original_image, 5, gauss);
+	convolution(seg, 5, gauss);
 
-	//save_image(original_image, "gauss.bmp");
+	save_image(seg, "gauss.bmp");
+    grayscale(seg);
+	reduceContrast(hough, 40);
 
-	reduceContrast(original_image, 40);
+	reduceContrast(seg, 20);
+	save_image(seg, "contrast.bmp");
+	sobel(hough);
+	save_image(hough, "sobel.bmp");
+	Uint8 otsuThreshold = calculateOtsuThreshold(seg);
+    binarize(seg, otsuThreshold);
+    save_image(seg, "bin.bmp");
+	HoughTransform(hough);
+	save_image(hough, "hough.bmp");
+    detection(hough, seg);
+    save_image(hough, "detection.bmp");
 
-	//reduceContrast(original_image, 50);
-	//save_image(original_image, "contrast.bmp");
-	sobel(original_image);
-	save_image(original_image, "sobel.bmp");
-	//Uint8 otsuThreshold = calculateOtsuThreshold(original_image);
-
-	HoughTransform(original_image);
-	save_image(original_image, "hough.bmp");
-    detection(original_image);
-    save_image(original_image, "detection.bmp");
-
-	SDL_FreeSurface(original_image);
+	SDL_FreeSurface(hough);
+	SDL_FreeSurface(seg);
 	IMG_Quit();
 	SDL_Quit();
 

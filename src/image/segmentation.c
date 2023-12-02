@@ -5,25 +5,54 @@
 #include <time.h>
 #include <stdio.h>
 
-
-
-int* filterByWeightedAverageDistance(int xpositions[], int n, double uncertainty, double threshold, int *filteredCount) {
-    // Calculate pair-wise distances
-    double *distances = malloc((n - 1) * sizeof(double));
-    for (int i = 0; i < n - 1; ++i) {
-        distances[i] = fabs(xpositions[i + 1] - xpositions[i]);
+void printArray(int* array, int length) {
+    if (array == NULL || length <= 0) {
+        printf("Invalid array\n");
+        return;
     }
 
-    // Calculate the weighted sum of distances
+    printf("Array: ");
+    for (int i = 0; i < length; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+}
+int *positions(int *array, int *length, double average)
+{
+    int *pos = malloc(10*sizeof(int));
+    pos[0] = array[0];
+    int count = 1;
+    for (int i = 1; i < 10; i++) {
+        int prevpos = pos[i - 1];
+
+        int newpos = prevpos + average;
+        if(abs(newpos - array[count]) < 20)
+        {
+            pos[i] = array[count++];
+        }
+        else
+        {
+            pos[i] = newpos;
+        }
+    }
+    *length = 10;
+    free(array);
+    return pos;
+}
+int* filterByWeightedAverageDistance(int xpositions[], int n, double uncertainty, double threshold, int *filteredCount,double *weightedAverageDistance) {
+    double *distances = malloc((n - 1) * sizeof(double));
+    for (int i = 0; i < n - 1; ++i) {
+        distances[i] = abs(xpositions[i + 1] - xpositions[i]);
+    }
+
     double weightedSum = 0.0;
     double weightSum = 0.0;
 
     for (int i = 0; i < n - 1; ++i) {
         double weight = 1.0;
 
-        // Adjust weight for consecutive xpositions that are more or less equal
         if (i > 0 && fabs( distances[i] - distances[i - 1]) < uncertainty) {
-            weight *= 2.0; // You can adjust the weight factor as needed
+            weight *= 40; // You can adjust the weight factor as needed
         }
         if (distances[i]>threshold) {
             weightedSum += weight * distances[i];
@@ -39,16 +68,14 @@ int* filterByWeightedAverageDistance(int xpositions[], int n, double uncertainty
         return NULL;
     }
 
-    double weightedAverageDistance = weightedSum / weightSum;
-    printf("average: %2f\n", weightedAverageDistance);
-    // Filter positions based on the weighted average distance
+    *weightedAverageDistance = weightedSum / weightSum;
+    printf("average: %2f\n", *weightedAverageDistance);
     int *filteredPositions = malloc((n - 1) * sizeof(int));
     *filteredCount = 0;
 
 
     for (int i = 0; i < n - 1; ++i) {
-        if (distances[i] >= threshold && distances[i] - weightedAverageDistance < uncertainty) {
-            // Check if the current position is not near the last added position
+        if ((distances[i] >= threshold && fabs(distances[i] - *weightedAverageDistance) < uncertainty)) {
             filteredPositions[(*filteredCount)++] = xpositions[i];
             printf("%d ", xpositions[i]);
             printf("%d\n", xpositions[i + 1]);
@@ -56,32 +83,28 @@ int* filterByWeightedAverageDistance(int xpositions[], int n, double uncertainty
         }
     }
 
-
     free(distances);
-    return filteredPositions;
+    int *pos = positions(filteredPositions, filteredCount, *weightedAverageDistance);
+    return pos;
 }
 int* filterByStandardDeviation(int xpositions[], int n, double uncertainty, double threshold, int *filteredCount) {
-    // Calculate pair-wise distances
     double *distances = malloc((n - 1) * sizeof(double));
     for (int i = 0; i < n - 1; ++i) {
-        distances[i] = fabs(xpositions[i + 1] - xpositions[i]);
+        distances[i] = abs(xpositions[i + 1] - xpositions[i]);
     }
 
-    // Calculate the mean of distances
     double mean = 0.0;
     for (int i = 0; i < n - 1; ++i) {
         mean += distances[i];
     }
     mean /= (n - 1);
 
-    // Calculate the standard deviation
     double stdDeviation = 0.0;
     for (int i = 0; i < n - 1; ++i) {
         stdDeviation += pow(distances[i] - mean, 2);
     }
     stdDeviation = sqrt(stdDeviation / (n - 1));
 
-    // Filter positions based on the standard deviation
     int *filteredPositions = malloc((n - 1) * sizeof(int));
     *filteredCount = 0;
 
@@ -101,7 +124,6 @@ double calculateDistance(double x1, double x2) {
 }
 
 void filterByMostCommonDistance(double xpositions[], int n, double uncertainty) {
-    // Calculate pair-wise distances
     double distances[n][n];
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -109,7 +131,6 @@ void filterByMostCommonDistance(double xpositions[], int n, double uncertainty) 
         }
     }
 
-    // Count occurrences of each distance
     int count[n * n];
     for (int i = 0; i < n * n; ++i) {
         count[i] = 0;
@@ -121,7 +142,6 @@ void filterByMostCommonDistance(double xpositions[], int n, double uncertainty) 
         }
     }
 
-    // Find the most common distance
     int mostCommonDistance = 0;
     for (int i = 1; i < n * n; ++i) {
         if (count[i] > count[mostCommonDistance]) {
@@ -129,7 +149,6 @@ void filterByMostCommonDistance(double xpositions[], int n, double uncertainty) 
         }
     }
 
-    // Filter positions based on the most common distance
     printf("Most common distance: %d * uncertainty\n", mostCommonDistance);
     printf("Filtered x positions:\n");
 
@@ -143,13 +162,11 @@ void filterByMostCommonDistance(double xpositions[], int n, double uncertainty) 
     }
 }
 int* filterByAverageDistance(int xpositions[], int n, double uncertainty, double threshold, int *filteredCount) {
-    // Calculate pair-wise distances
     double *distances = malloc((n - 1) * sizeof(double));
     for (int i = 0; i < n - 1; ++i) {
-        distances[i] = fabs(xpositions[i + 1] - xpositions[i]);
+        distances[i] = abs(xpositions[i + 1] - xpositions[i]);
     }
 
-    // Calculate the average distance
     double totalDistance = 0.0;
     int pairCount = 0;
 
@@ -169,7 +186,6 @@ int* filterByAverageDistance(int xpositions[], int n, double uncertainty, double
 
     double averageDistance = totalDistance / pairCount;
     printf("The average distance is: %.2f\n", averageDistance);
-    // Filter positions based on the average distance
     int *filteredPositions = malloc(pairCount * sizeof(int));
     *filteredCount = 0;
 
@@ -217,7 +233,7 @@ void shiftLeft(double arr[], int size) {
     }
 
 }
-void detection(SDL_Surface *image)
+void detection(SDL_Surface *image, SDL_Surface *seg)
 {
     int count = 0;
     int coordx[64];
@@ -281,14 +297,18 @@ void detection(SDL_Surface *image)
     //}
     int counterx = 0;
     int countery= 0;
+    double averagex = 0;
+    double averagey = 0;
     printf("jid\n");
 
-    int* cx = filterByWeightedAverageDistance( coordx, countx, 50, 30,&counterx);
-    int* cy = filterByWeightedAverageDistance(coordy, count, 50, 30, &countery);
-
+    int* cx = filterByWeightedAverageDistance( coordx, countx, 7, 20,&counterx, &averagex);
+    printArray(cx, counterx);
+    int* cy = filterByWeightedAverageDistance(coordy, count, 7, 20, &countery, &averagey);
+    if(!cx || !cy)
+        return;
     for (int y = 0; y < image->h; y++) {
         for (int x = 0; x < image->w; x++) {
-            if (x<cx[0]||y<cy[0]) {
+            if (x<cx[0]||y<cy[0]||x>cx[9]||y>cy[9]) {
                 Uint8 red, green, blue, alpha;
                 Uint32 pixel = get_pixel(image, y, x);
                 SDL_GetRGBA(pixel, image->format, &red, &green , &blue, &alpha);
@@ -301,8 +321,7 @@ void detection(SDL_Surface *image)
     free(cy);
 }
 
-void segmentation(SDL_Surface *image)
-{
+void segmentation(SDL_Surface *image, int* xpos, int* ypos){
     for (int y = 0; y < image->h ; y++) {
         for (int x = 0; x < image->w; x++) {
 
