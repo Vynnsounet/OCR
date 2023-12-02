@@ -85,5 +85,28 @@ void convolution(SDL_Surface *image, int k, double matrix[k][k])
     }
 }
 
+int validcell(SDL_Surface * image)
+{
+  int nb = 0;
+  for (int y = 0; y < image->h; y++)
+    {
+        for (int x = 0; x < image->w; x++)
+        {
 
+            Uint8 red, green, blue, alpha;
+            Uint32 pixel = get_pixel(image, y, x);
+            SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
+	    if (red == 0)
+	      {
+		nb+=1;
+	      }
+	}
+    }
+  int res = (int)((nb/(image->h*image->w))*100);
+  //printf("%i\n",res);
+  return res;
+
+  
+
+}
 
