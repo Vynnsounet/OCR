@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
+#include "includes/image.h"
 #include "includes/image_op.h"
+#include "includes/rotation.h"
 
 #define SEUIL 400
 
@@ -135,4 +137,67 @@ void HoughTransform(SDL_Surface *image)
 }
 
 
+
+int HoughVerif(SDL_Surface * image)
+{
+  int redx = 0;      
+	      
+  for (int x = 5; x < image->h; x++)
+    {
+      Uint8 red, green, blue, alpha;
+
+      Uint32 pixel = get_pixel(image, 5, x);
+
+      SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
+      if (green == 0 && red == 255) {
+	redx+=1;
+      }    
+    }
+  int redy =0;
+  
+  for (int y = 5; y < image->w; y++)
+    {
+      Uint8 red, green, blue, alpha;
+
+      Uint32 pixel = get_pixel(image, y, 5);
+
+      SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
+      if (green == 0 && red == 255) {
+	redy+=1;
+      }
+   
+    }
+  printf("x=%i, y=%i\n", redx, redy);
+  if (redx<20 || redy<20)
+    {
+      return 42;
+
+    }
+
+  return redx+redy;
+
+}
+
+void automaticrotation(SDL_Surface * image, SDL_Surface * nimage)
+{
+  	HoughTransform(image);
+  	int red = HoughVerif(image);
+     
+	int z = -5;
+	while(red<50)
+	  {
+	   image = load_image("sobel.bmp");
+	   image = rotation(z,image);
+	   HoughTransform(image);
+	   z-=5;
+	   red = HoughVerif(image);
+	    
+	  }
+     
+	save_image(image, "hough");
+
+	SDL_Surface * rot = rotation(z+5,nimage);
+	save_image(rot, "rotate.bmp");
+	SDL_FreeSurface(rot);
+}
 

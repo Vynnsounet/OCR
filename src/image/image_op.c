@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <string.h>
+#include "includes/image.h"
 
 Uint32 get_pixel(SDL_Surface *image, int y, int x)
 {
@@ -85,7 +87,7 @@ void convolution(SDL_Surface *image, int k, double matrix[k][k])
     }
 }
 
-int validcell(SDL_Surface * image)
+double validcell(SDL_Surface * image)
 {
   int nb = 0;
   for (int y = 0; y < image->h; y++)
@@ -96,17 +98,67 @@ int validcell(SDL_Surface * image)
             Uint8 red, green, blue, alpha;
             Uint32 pixel = get_pixel(image, y, x);
             SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
-	    if (red == 0)
+	    if (red <=5 && green <=5)
 	      {
 		nb+=1;
 	      }
 	}
     }
-  int res = (int)((nb/(image->h*image->w))*100);
-  //printf("%i\n",res);
+  double res = ((double)nb/(image->h*image->w))*100.0;
+ 
+  printf("%f\n",res);
   return res;
-
-  
 
 }
 
+
+
+void createfilesolver(char *directoryPath, char* grid) {
+
+   FILE *gridd = fopen(grid , "w");
+   int i = 1;
+   int a = 1;
+   int b = 1;
+   while (a<=9 && b<=9)
+     {
+       char c[10];
+       snprintf(c, sizeof(c), "%i-%i", a, b);
+
+            char filePath[1024];
+            snprintf(filePath, sizeof(filePath), "%s/%s", directoryPath, c);
+		SDL_Surface *cell = load_image(filePath);
+                if (validcell(cell)>5)
+		  {
+		    fprintf(gridd,"C");
+		  }
+		else
+		  {
+		    fprintf(gridd,".");
+		  }
+
+		if (i%3==0 && i%9!=0) //&& i!= 30 && i!=33)|| i==31 || i==35)
+		  {
+
+		    fprintf(gridd, " ");
+
+		  }
+		if (i%9==0)
+		  {
+		    fprintf(gridd, "\n");
+		    
+		  }
+		i+=1;
+       b+=1;
+       if (b>9)
+	 {
+	   a+=1;
+	   b=1;
+	 }
+       
+    }
+    
+    fclose(gridd);
+     
+}
+
+    

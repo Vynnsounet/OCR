@@ -9,5 +9,6 @@ void grayscale(SDL_Surface *image);
 void binarize(SDL_Surface *image, Uint8 threshold);
 void convolution(SDL_Surface *image, size_t k, double matrix[][5]);
 int validcell(SDL_Surface * image);
+void createfilesolver(const char *directoryPath, const char* grid);
 
 #endif

@@ -41,4 +41,6 @@ $(OBJ_DIR)/contrast.o: includes/contrast.h includes/image_op.h
 $(OBJ_DIR)/Sobel.o: includes/Sobel.h
 $(OBJ_DIR)/grid.o: includes/Sobel.h
 $(OBJ_DIR)/hough.o: includes/image_op.h
+$(OBJ_DIR)/rotation.o: includes/rotation.h includes/image_op.h
+
 
