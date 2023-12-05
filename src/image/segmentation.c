@@ -86,9 +86,9 @@ void detection(SDL_Surface *image, SDL_Surface *seg)
     int count = 0;
     int coordx[64];
     int coordy[64];
-    for (int x = 0; x < image->w; x++) {
+    for (int x = 1; x < image->w; x++) {
         Uint8 red, green, blue, alpha;
-        Uint32 pixel = get_pixel(image, 4, x);
+        Uint32 pixel = get_pixel(image, 2, x);
         SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
         if (red == 255) {
 
@@ -98,7 +98,7 @@ void detection(SDL_Surface *image, SDL_Surface *seg)
             }
             while (red == 255 && x<image->w)
             {
-                pixel = get_pixel(image, 4, x);
+                pixel = get_pixel(image, 2, x);
                 SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
                 x++;
             }
@@ -113,7 +113,7 @@ void detection(SDL_Surface *image, SDL_Surface *seg)
     count = 0;
     for (int y = 1; y < image->h; y++) {
            Uint8 red, green, blue, alpha;
-           Uint32 pixel = get_pixel(image, y, 4);
+           Uint32 pixel = get_pixel(image, y, 2);
            SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
            if (red == 255) {
 
@@ -124,7 +124,7 @@ void detection(SDL_Surface *image, SDL_Surface *seg)
 
                while (red == 255 && y<image->h)
                {
-                   pixel = get_pixel(image, y, 4);
+                   pixel = get_pixel(image, y, 2);
                    SDL_GetRGBA(pixel, image->format, &red, &green, &blue, &alpha);
                    y++;
 
@@ -179,12 +179,12 @@ void segmentation(SDL_Surface *image, int* xpos, int* ypos){
                 }
             }
             sprintf(str, "cropped/%d-%d", y+1 , x+1);
-            SDL_Surface* resize = SDL_CreateRGBSurface(0, 50, 50, 32, 0, 0, 0, 0);
+            SDL_Surface* resize = SDL_CreateRGBSurface(0, 48, 48, 32, 0, 0, 0, 0);
             SDL_BlitScaled(cropped, NULL, resize, NULL);
             cropped = SDL_CreateRGBSurface(0, 28, 28, 32, 0, 0, 0, 0);
             for (int i = 0; i < 28; i++) {
                 for (int j = 0; j < 28; j++) {
-                    Uint32 pixel = get_pixel(resize, i+11 , 11+j);
+                    Uint32 pixel = get_pixel(resize, i+10 , 10+j);
                        put_pixel(cropped, i , j, pixel);
                 }
             }
@@ -200,9 +200,3 @@ void segmentation(SDL_Surface *image, int* xpos, int* ypos){
 }
 
 
-void resize(SDL_Surface *image , char* str)
-{
-    int width = image->w;
-    int height = image->h;
-
-}
