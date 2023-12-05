@@ -18,6 +18,29 @@ void xmul(size_t k, double array[k][k], float x)
     }
 }
 
+SDL_Surface* convertSurfaceToRGBA8888(SDL_Surface* originalSurface) {
+    // Create a pixel format with RGBA8888
+    SDL_PixelFormat rgbaFormat = {
+        .format = SDL_PIXELFORMAT_RGBA8888,
+        .BitsPerPixel = 32,
+        .BytesPerPixel = 4,
+        .Rmask = 0x000000FF,
+        .Gmask = 0x0000FF00,
+        .Bmask = 0x00FF0000,
+        .Amask = 0xFF000000
+    };
+
+    // Create a new surface with RGBA8888 format
+    SDL_Surface* convertedSurface = SDL_ConvertSurface(originalSurface, &rgbaFormat, 0);
+
+    if (!convertedSurface) {
+        // Handle error, e.g., print an error message or return NULL
+        SDL_Log("Failed to convert surface: %s", SDL_GetError());
+        return NULL;
+    }
+
+    return convertedSurface;
+}
 int main(int argc, char** argv)
 {
 	if (argc !=2)
@@ -41,7 +64,9 @@ int main(int argc, char** argv)
 	}
 
 	SDL_Surface *hough = load_image(argv[1]);
+	hough = convertSurfaceToRGBA8888(hough);
 	SDL_Surface *seg = load_image(argv[1]);
+	seg = convertSurfaceToRGBA8888(seg);
 
 	if (!hough || !seg)
 	{
