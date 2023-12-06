@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.40.0 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkWindow" id="second_window">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkFixed" id="fixe2">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <object class="GtkStack" id="stack">
+            <property name="width-request">536</property>
+            <property name="height-request">416</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkFixed" id="page accueil">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="Menu accueil">
+                    <property name="width-request">102</property>
+                    <property name="height-request">80</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Menu d'accueil</property>
+                  </object>
+                  <packing>
+                    <property name="x">222</property>
+                    <property name="y">176</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="name">page0</property>
+                <property name="title" translatable="yes">Accueil</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="page_1">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="format image">
+                    <property name="width-request">530</property>
+                    <property name="height-request">350</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Notre application peut prendre plusieurs formats d'images. Elle peut
+prendre les ".png", ".jpeg", ".jpg" et les ".bmp".
+
+En effet, tous autres types de formats ne seront pas acceptés. Donc, 
+vérifiez bien que le nom de votre image finit bien par l'un des suffixes
+suivant.</property>
+                  </object>
+                  <packing>
+                    <property name="x">6</property>
+                    <property name="y">14</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="name">page1</property>
+                <property name="title" translatable="yes">Format d'image</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="page_2">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="message erreur">
+                    <property name="width-request">536</property>
+                    <property name="height-request">415</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Si lors du lancement du programme un message d'erreur apparait. Cela 
+peut venir de plusieurs endroits donc pour vous aider à régler votre pro-
+blème il y a plusieurs choses que nous vous conseillons de faire :
+
+- Vérifiez le format de l'image que vous avez mise. En effet, comme expli-
+qué dans "Format d'image" notre interface accepte certains types d'ima-
+ges. (pour plus de détail voir la section concernée)
+
+-Vérifiez le format texte de vous avez importé. En effet, il faut un format 
+texte très particulier pour que notre programme fonctionne. (pour plus 
+détail voir la section concernée) 
+
+-Vérifiez que le sudoku est soluble. Pour ce faire, vous pouvez vérifier sur 
+internet s'il l'est mais que le message d'erreur est quand même apparu 
+vous pouvez importer un fichier texte conforme pour avoir le résultat final.</property>
+                  </object>
+                  <packing>
+                    <property name="y">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="name">page2</property>
+                <property name="title" translatable="yes">Message d'erreur</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="page_3">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="format txt">
+                    <property name="width-request">536</property>
+                    <property name="height-request">145</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Vous pouvez importer un fichier texte si la reconnaissance de caractère 
+échoue. En effet, il vous suffit d'importer un fichier présenté comme 
+l'exemple ci-dessous. Les points représentants les cases vides.
+
+Information importante : si le fichier n'est pas conforme ou qu'il n'y a pas 
+la mention ".txt" à la fin une erreur surviendra.</property>
+                  </object>
+                  <packing>
+                    <property name="y">25</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="width-request">264</property>
+                    <property name="height-request">254</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="pixbuf">exemple_fichier_txt.png</property>
+                  </object>
+                  <packing>
+                    <property name="x">130</property>
+                    <property name="y">162</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="name">page3</property>
+                <property name="title" translatable="yes">Format txt</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="y">33</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkStackSwitcher" id="switch1">
+            <property name="width-request">536</property>
+            <property name="height-request">36</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="stack">stack</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="window">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkFixed" id="fixed">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <object class="GtkCheckButton" id="Flou">
+            <property name="label" translatable="yes">Flou</property>
+            <property name="width-request">113</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <signal name="toggled" handler="Flou_toggled_cb" swapped="no"/>
+            <signal name="toggled" handler="on_Flou_toggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">640</property>
+            <property name="y">191</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="Start">
+            <property name="label" translatable="yes">Start</property>
+            <property name="width-request">100</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="margin-bottom">22</property>
+            <signal name="clicked" handler="on_Start_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">291</property>
+            <property name="y">600</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="sudoku">
+            <property name="width-request">550</property>
+            <property name="height-request">550</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">Untitled1.png</property>
+          </object>
+          <packing>
+            <property name="x">41</property>
+            <property name="y">32</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="Canny">
+            <property name="label" translatable="yes">Canny</property>
+            <property name="width-request">113</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <signal name="toggled" handler="on_Canny_toggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">640</property>
+            <property name="y">234</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="Grayscale">
+            <property name="label" translatable="yes">Grayscale</property>
+            <property name="width-request">113</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <signal name="toggled" handler="on_Grayscale_toggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">640</property>
+            <property name="y">277</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="Hough">
+            <property name="label" translatable="yes">Hough</property>
+            <property name="width-request">113</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <signal name="toggled" handler="on_Hough_toggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">640</property>
+            <property name="y">324</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="Rotation">
+            <property name="label" translatable="yes">Rotation</property>
+            <property name="width-request">113</property>
+            <property name="height-request">33</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <signal name="toggled" handler="on_Rotation_toggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">640</property>
+            <property name="y">371</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="Resultat">
+            <property name="label" translatable="yes">Resultat</property>
+            <property name="width-request">113</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+            <signal name="toggled" handler="on_Resultat_toggled" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">640</property>
+            <property name="y">423</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="logo">
+            <property name="width-request">130</property>
+            <property name="height-request">130</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-right">30</property>
+            <property name="pixbuf">imageedit_2_8538685484.png</property>
+          </object>
+          <packing>
+            <property name="x">620</property>
+            <property name="y">28</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="Download">
+            <property name="label" translatable="yes">Download</property>
+            <property name="width-request">105</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_Download_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">471</property>
+            <property name="y">600</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="Help">
+            <property name="label" translatable="yes">Help</property>
+            <property name="width-request">108</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_Help_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">646</property>
+            <property name="y">598</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFileChooserButton" id="file">
+            <property name="width-request">169</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="preview-widget-active">False</property>
+            <property name="use-preview-label">False</property>
+            <property name="title" translatable="yes"/>
+            <signal name="file-set" handler="on_file_file_set" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">45</property>
+            <property name="y">600</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -7,6 +7,7 @@
 #include "includes/Sobel.h"
 #include "includes/hough.h"
 #include "includes/segmentation.h"
+#include "includes/rotation.h"
 void xmul(size_t k, double array[k][k], float x)
 {
     for (size_t i = 0; i < k; ++i)
@@ -65,6 +66,7 @@ int main(int argc, char** argv)
 
 	SDL_Surface *hough = load_image(argv[1]);
 	hough = convertSurfaceToRGBA8888(hough);
+
 	SDL_Surface *seg = load_image(argv[1]);
 	seg = convertSurfaceToRGBA8888(seg);
 
