@@ -1,9 +1,21 @@
-CC=gcc
-CFLAGS=-Wall -Wextra -g -lm
+C_SOURCES = $(wildcard matrix/*.c neural/*.c util/*.c *.c)
+HEADERS = $(wildcard matrix/*.h neural/*.h util/*.h *.h)
+OBJ = ${C_SOURCES:.c=.o}
+CFLAGS = 
 
-all: 
-	gcc -o xor -lm matlib.c matlib.h nnlib.h nnlib.c xor.c 
+MAIN = main
+CC = /usr/bin/gcc
+LINKER = /usr/bin/ld
 
-clean: 
-	rm xor
+run: ${MAIN}
+	./${MAIN}
 
+main: ${OBJ}
+	${CC} ${CFLAGS} $^ -o $@ -lm
+
+# Generic rules
+%.o: %.c ${HEADERS}
+	${CC} ${CFLAGS} -c $< -o $@ -lm
+
+clean:
+	rm matrix/*.o *.o neural/*.o util/*.o ${MAIN}
