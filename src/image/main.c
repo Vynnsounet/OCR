@@ -86,7 +86,7 @@ int main(int argc, char** argv)
     grayscale(seg);
 	reduceContrast(hough, 40);
 
-	reduceContrast(seg, 30);
+	reduceContrast(seg, 40);
 	save_image(seg, "contrast.bmp");
 	sobel(hough);
 	save_image(hough, "sobel.bmp");

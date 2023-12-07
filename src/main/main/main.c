@@ -74,6 +74,7 @@ void on_file_file_set(GtkFileChooserButton *f)
     gtk_container_add(GTK_CONTAINER(fixed), image1);
     gtk_widget_show(image1);
     gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver); 
+    printf("%s\n", file);
 }
 
 void on_Help(GtkButton *button, gpointer user_data)

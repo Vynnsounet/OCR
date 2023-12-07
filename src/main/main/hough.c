@@ -80,8 +80,8 @@ void HoughTransform(SDL_Surface *image)
         }
     }
 
-    for (int x = 0; x < image->h; x++) {
-        for (int y = 0; y < image->w; y++) {
+    for (int x = 4; x < image->h; x++) {
+        for (int y = 4; y < image->w; y++) {
 	   Uint8 red, green, blue, alpha;
 
 	  Uint32 pixel = get_pixel(image, y, x);

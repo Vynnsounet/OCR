@@ -80,7 +80,7 @@ int process(char * filename)
     grayscale(seg);
 	reduceContrast(hough, 40);
 
-	reduceContrast(seg, 30);
+	reduceContrast(seg, 40);
 	save_image(seg, "processed/contrast.bmp");
 	sobel(hough);
 	save_image(hough, "processed/sobel.bmp");
