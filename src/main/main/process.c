@@ -41,13 +41,8 @@ SDL_Surface* convertSurfaceToRGBA8888(SDL_Surface* originalSurface) {
 
     return convertedSurface;
 }
-int process(int argc, char** argv)
+int process(char * filename)
 {
-	if (argc !=2)
-	{
-		printf("error: wrong number of arguments\n");
-		return 1;
-	}
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 
@@ -63,43 +58,44 @@ int process(int argc, char** argv)
 		return 1;
 	}
 
-	SDL_Surface *hough = load_image(argv[1]);
+	SDL_Surface *hough = load_image(filename);
 	hough = convertSurfaceToRGBA8888(hough);
-	SDL_Surface *seg = load_image(argv[1]);
+	SDL_Surface *seg = load_image(filename);
 	seg = convertSurfaceToRGBA8888(seg);
 
 	if (!hough || !seg)
 	{
+        IMG_Quit();
 		SDL_Quit();
 		return 1;
 	}
 	double gauss[5][5] = {{2, 4, 5, 4, 2}, {4, 9, 12, 9, 4}, {5, 12, 15, 12, 5}, {4, 9, 12, 9, 4}, {2, 4, 5, 4, 2}};
 	xmul(5, gauss, (double)(1.0 / 159.0));
 	grayscale(hough);
-	save_image(hough, "grayscale.bmp");
+	save_image(hough, "processed/grayscale.bmp");
 
 	convolution(seg, 5, gauss);
 
-	save_image(seg, "gauss.bmp");
+	save_image(seg, "processed/gauss.bmp");
     grayscale(seg);
 	reduceContrast(hough, 40);
 
 	reduceContrast(seg, 30);
-	save_image(seg, "contrast.bmp");
+	save_image(seg, "processed/contrast.bmp");
 	sobel(hough);
-	save_image(hough, "sobel.bmp");
+	save_image(hough, "processed/sobel.bmp");
 	Uint8 otsuThreshold = calculateOtsuThreshold(seg);
     binarize(seg, otsuThreshold);
-    save_image(seg, "bin.bmp");
+    save_image(seg, "processed/bin.bmp");
     //SDL_Surface * nimage = load_image("sobel.bmp");
     HoughTransform(hough);
     
     //automaticrotation(hough, nimage);
-    save_image(hough,"hough.bmp");
+    save_image(hough,"processed/hough.bmp");
     detection(hough, seg);
-    save_image(hough, "detection.bmp");
+    save_image(hough, "processed/detection.bmp");
 
-    createfilesolver("cropped/","grid2");
+    //createfilesolver("cropped/","grid2");
 
 	SDL_FreeSurface(hough);
 	SDL_FreeSurface(seg);

@@ -18,11 +18,11 @@ void save_image(SDL_Surface *image, const char *filename)
     SDL_SaveBMP(image, filename);
 }
 
-void resize_image_GTK(SDL_Surface* image)
+void resize_image_GTK(SDL_Surface* image, char * filename)
 {
     SDL_Surface* resize = SDL_CreateRGBSurface(0, 550, 550, 32, 0, 0, 0, 0);
     SDL_BlitScaled(image, NULL, resize, NULL);
-    save_image(resize, "processedresized.bmp");
+    save_image(resize, filename);
     SDL_FreeSurface(resize);
     SDL_FreeSurface(image);
 }

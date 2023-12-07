@@ -3,6 +3,12 @@
 #include "includes/hough.h"
 #include "includes/image.h"
 #include "includes/image_op.h"
+#include "includes/threshold.h"
+#include "includes/contrast.h"
+#include "includes/Sobel.h"
+#include "includes/hough.h"
+#include "includes/segmentation.h"
+#include "includes/process.h"
 
 
 GtkWidget *sudoku;
@@ -38,7 +44,6 @@ int verif_filename(char *filename, const char *s)
 void on_file_file_set(GtkFileChooserButton *f)
 {
     char *filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(f));
-    file = filename;
     int verif = verif_filename(filename, ".png");
     verif += verif_filename(filename, ".bmp");
     verif += verif_filename(filename, ".jpeg");
@@ -61,27 +66,31 @@ void on_file_file_set(GtkFileChooserButton *f)
         gtk_container_remove(GTK_CONTAINER(fixed), image1);
     }
     gtk_widget_hide(sudoku);
+    file = filename;
+    resize_image_GTK(load_image(filename), "processed/resized.bmp");
+    filename = "processed/resized.bmp";
     image1 = gtk_image_new_from_file(filename);
     gtk_container_add(GTK_CONTAINER(fixed), image1);
     gtk_widget_show(image1);
-    gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
-    
+    gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver); 
 }
 
 void on_Help(GtkButton *button, gpointer user_data)
 {
+
     gtk_widget_show_all(second_window);   
 }
 
 void on_Start(GtkButton *button, gpointer user_data)
 {
+    process(file);
     g_print("on_Start()\n");
 }
 
 void on_Download(GtkButton *button, gpointer user_data)
 {
     
-    save_image(load_image(file), "download");
+    
     g_print("on_Download()\n");
 }
 
@@ -116,14 +125,10 @@ void on_Grayscale(GtkCheckButton* button, gpointer user_data)
 }
 
 
-// Main function.
 int main (int argc, char *argv[])
 {
-    // Initializes GTK.
     gtk_init(NULL, NULL);
 
-    // Loads the UI description and builds the UI.
-    // (Exits if an error occurs.)
     GtkBuilder* builder = gtk_builder_new();
     GError* error = NULL;
     if (gtk_builder_add_from_file(builder, "interface.glade", &error) == 0)
@@ -133,7 +138,6 @@ int main (int argc, char *argv[])
         return 1;
     }
 
-    // Gets the widgets.
     window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
     second_window = GTK_WIDGET(gtk_builder_get_object(builder, "second_window"));
     GtkFileChooserButton* file = GTK_FILE_CHOOSER_BUTTON(gtk_builder_get_object(builder, "file"));
@@ -149,7 +153,6 @@ int main (int argc, char *argv[])
     sudoku = GTK_WIDGET(gtk_builder_get_object(builder, "sudoku"));
     fixed = GTK_WIDGET(gtk_builder_get_object(builder, "fixed"));
 
-    // Connects signal handlers.
     
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
     g_signal_connect(file, "file_set", G_CALLBACK(on_file_file_set), NULL);
@@ -163,11 +166,9 @@ int main (int argc, char *argv[])
     g_signal_connect(Hough, "toggled", G_CALLBACK(on_Hough), NULL);
     g_signal_connect(Rotation, "toggled", G_CALLBACK(on_Rotation), NULL);
 
-    // Runs the main loop.
     gtk_widget_show_all(window);
     image1 = NULL;
     gtk_main();
 
-    // Exits.
     return 0;
 }

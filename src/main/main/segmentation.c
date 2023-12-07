@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "includes/image.h"
 #include "includes/segmentation.h"
+#include <unistd.h>
 
 
 
@@ -161,7 +162,7 @@ void detection(SDL_Surface *image, SDL_Surface *seg)
 }
 
 void segmentation(SDL_Surface *image, int* xpos, int* ypos){
-    char* str = malloc(11*sizeof(char));
+    char* str = malloc(13*sizeof(char));
     for (int y = 0; y < 9; y++) {
         for (int x = 0; x < 9; x++) {
             int x1 = xpos[x];
@@ -178,9 +179,12 @@ void segmentation(SDL_Surface *image, int* xpos, int* ypos){
                     put_pixel(cropped, i , j, pixel);
                 }
             }
-            sprintf(str, "cropped/%d-%d", y+1 , x+1);
+            
+            snprintf(str,13, "cropped/%d-%d", y+1 , x+1);
+
             SDL_Surface* resize = SDL_CreateRGBSurface(0, 48, 48, 32, 0, 0, 0, 0);
             SDL_BlitScaled(cropped, NULL, resize, NULL);
+            
             cropped = SDL_CreateRGBSurface(0, 28, 28, 32, 0, 0, 0, 0);
             for (int i = 0; i < 28; i++) {
                 for (int j = 0; j < 28; j++) {
@@ -188,7 +192,6 @@ void segmentation(SDL_Surface *image, int* xpos, int* ypos){
                        put_pixel(cropped, i , j, pixel);
                 }
             }
-
             save_image(cropped, str);
 
             SDL_FreeSurface(cropped);

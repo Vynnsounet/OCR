@@ -25,11 +25,9 @@ $(OBJ_DIR):
 .PHONY: clean
 clean:
 	rm -rf $(OBJ_DIR) $(EXECUTABLE)
-	rm *.bmp
+	rm processed/*
 	rm cropped/*
 	rm grid2
-	rm grid
-
 .PHONY: run
 run: $(EXECUTABLE)
 	./$(EXECUTABLE)
