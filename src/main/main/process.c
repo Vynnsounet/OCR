@@ -87,12 +87,16 @@ int process(char * filename)
 	Uint8 otsuThreshold = calculateOtsuThreshold(seg);
     binarize(seg, otsuThreshold);
     save_image(seg, "processed/bin.bmp");
+    printf("hndskjh\n");
     //SDL_Surface * nimage = load_image("sobel.bmp");
     HoughTransform(hough);
     
+    printf("hndskjh\n");
     //automaticrotation(hough, nimage);
     save_image(hough,"processed/hough.bmp");
+    printf("hndskjh\n");
     detection(hough, seg);
+    printf("hndskjh\n");
     save_image(hough, "processed/detection.bmp");
 
     //createfilesolver("cropped/","grid2");

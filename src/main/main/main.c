@@ -23,6 +23,7 @@ GtkWidget *flou;
 GtkWidget *fixed;
 GtkWidget* window;
 GtkWidget* second_window;
+GtkWidget* Sudoku;
 char * file;
 // Signal handler for the "clicked" signal of the start button.
 int verif_filename(char *filename, const char *s)
@@ -94,36 +95,101 @@ void on_Download(GtkButton *button, gpointer user_data)
     g_print("on_Download()\n");
 }
 
-void on_Rotation(GtkCheckButton* button, gpointer user_data)
+void on_Rotation(GtkButton* button, gpointer user_data)
 {
     g_print("on_Rotation()\n");
 }
 
-void on_Canny(GtkCheckButton* button, gpointer user_data)
+void on_Sobel(GtkButton* button, gpointer user_data)
 {
-    g_print("on_Canny()\n");
+	int hor = 41;
+	int ver = 32;
+	if(image1 != NULL)
+	{
+		gtk_container_remove(GTK_CONTAINER(fixed), image1);
+	}
+	resize_image_GTK(load_image("processed/sobel.bmp"), "processed/sobel_resized.bmp");
+	char *filename = "processed/sobel_resized.bmp";
+	image1 = gtk_image_new_from_file(filename);
+	gtk_container_add(GTK_CONTAINER(fixed), image1);
+	gtk_widget_show(image1);
+	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+
+	g_print("on_Sobel()\n");
 }
 
-void on_Hough(GtkCheckButton* button, gpointer user_data)
+void on_Hough(GtkButton* button, gpointer user_data)
 {
-    g_print("on_Hough()\n");
+	int hor = 41;
+	int ver = 32;
+	if(image1 != NULL)
+		{
+			gtk_container_remove(GTK_CONTAINER(fixed), image1);
+			}
+	resize_image_GTK(load_image("processed/hough.bmp"), "processed/hough_resized.bmp");
+	char *filename = "processed/hough_resized.bmp";
+	image1 = gtk_image_new_from_file(filename);
+	gtk_container_add(GTK_CONTAINER(fixed), image1);
+	gtk_widget_show(image1);
+	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+	g_print("on_Hough()\n");
 }
 
-void on_Flou(GtkCheckButton* button, gpointer user_data)
+void on_Flou(GtkButton* button, gpointer user_data)
 {
-    g_print("on_Flou()\n");
+	int hor = 41;
+	int ver = 32;
+	if(image1 != NULL)
+	{
+		gtk_container_remove(GTK_CONTAINER(fixed), image1);
+	}
+	resize_image_GTK(load_image("processed/gauss.bmp"), "processed/gauss_resized.bmp");
+	char *filename = "processed/gauss_resized.bmp";
+	image1 = gtk_image_new_from_file(filename);
+	gtk_container_add(GTK_CONTAINER(fixed), image1);
+	gtk_widget_show(image1);
+	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+	g_print("on_Flou()\n");
 }
 
-void on_Resultat(GtkCheckButton* button, gpointer user_data)
+void on_Resultat(GtkButton* button, gpointer user_data)
 {
     g_print("on_Resultat()\n");
 }
 
-void on_Grayscale(GtkCheckButton* button, gpointer user_data)
+void on_Grayscale(GtkButton* button, gpointer user_data)
 {
-    g_print("on_Grascale()\n");
+	int hor = 41;
+	int ver = 32;
+	if(image1 != NULL)
+	{
+		gtk_container_remove(GTK_CONTAINER(fixed), image1);
+	}
+	resize_image_GTK(load_image("processed/grayscale.bmp"), "processed/grayscale_resized.bmp");
+	char *filename = "processed/grayscale_resized.bmp";
+	image1 = gtk_image_new_from_file(filename);
+	gtk_container_add(GTK_CONTAINER(fixed), image1);
+	gtk_widget_show(image1);
+	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+	g_print("on_Grayscale()\n");
 }
 
+void on_Sudoku(GtkButton* button, gpointer user_data)
+{
+	int hor = 41;
+	int ver = 32;
+	if(image1 != NULL)
+	{
+		gtk_container_remove(GTK_CONTAINER(fixed), image1);
+	}
+	resize_image_GTK(load_image(file), "processed/resized.bmp");
+	char *filename = "processed/resized.bmp";
+	image1 = gtk_image_new_from_file(filename);
+	gtk_container_add(GTK_CONTAINER(fixed), image1);
+	gtk_widget_show(image1);
+	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+	g_print("on_Sudoku()\n)");
+}
 
 int main (int argc, char *argv[])
 {
@@ -144,12 +210,14 @@ int main (int argc, char *argv[])
     GtkButton* Start = GTK_BUTTON(gtk_builder_get_object(builder, "Start"));
     GtkButton* Download = GTK_BUTTON(gtk_builder_get_object(builder, "Download"));
     GtkButton* Help = GTK_BUTTON(gtk_builder_get_object(builder, "Help"));
-    GtkCheckButton* Flou = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "Flou"));
-    GtkCheckButton* Canny = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "Canny"));
-    GtkCheckButton* Grayscale = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "Grayscale"));
-    GtkCheckButton* Hough = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "Hough"));
-    GtkCheckButton* Rotation = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "Rotation"));
-    GtkCheckButton* Resultat = GTK_CHECK_BUTTON(gtk_builder_get_object(builder, "Resultat"));
+    GtkButton* Flou = GTK_BUTTON(gtk_builder_get_object(builder, "Flou"));
+    GtkButton* Canny = GTK_BUTTON(gtk_builder_get_object(builder, "Canny"));
+    GtkButton* Grayscale = GTK_BUTTON(gtk_builder_get_object(builder, "Grayscale"));
+    GtkButton* Hough = GTK_BUTTON(gtk_builder_get_object(builder, "Hough"));
+    GtkButton* Rotation = GTK_BUTTON(gtk_builder_get_object(builder, "Rotation"));
+    GtkButton* Resultat = GTK_BUTTON(gtk_builder_get_object(builder, "Resultat"));
+    GtkButton* sudo = GTK_BUTTON(gtk_builder_get_object(builder, "Sudoku"));
+
     sudoku = GTK_WIDGET(gtk_builder_get_object(builder, "sudoku"));
     fixed = GTK_WIDGET(gtk_builder_get_object(builder, "fixed"));
 
@@ -159,12 +227,13 @@ int main (int argc, char *argv[])
     g_signal_connect(Help, "clicked", G_CALLBACK(on_Help), NULL);
     g_signal_connect(Start, "clicked", G_CALLBACK(on_Start), NULL);
     g_signal_connect(Download, "clicked", G_CALLBACK(on_Download), NULL);
-    g_signal_connect(Flou, "toggled", G_CALLBACK(on_Flou), NULL);
-    g_signal_connect(Canny, "toggled", G_CALLBACK(on_Canny), NULL);
-    g_signal_connect(Resultat, "toggled", G_CALLBACK(on_Resultat), NULL);
-    g_signal_connect(Grayscale, "toggled", G_CALLBACK(on_Grayscale), NULL);
-    g_signal_connect(Hough, "toggled", G_CALLBACK(on_Hough), NULL);
-    g_signal_connect(Rotation, "toggled", G_CALLBACK(on_Rotation), NULL);
+    g_signal_connect(Flou, "clicked", G_CALLBACK(on_Flou), NULL);
+    g_signal_connect(Canny, "clicked", G_CALLBACK(on_Sobel), NULL);
+    g_signal_connect(Resultat, "clicked", G_CALLBACK(on_Resultat), NULL);
+    g_signal_connect(Grayscale, "clicked", G_CALLBACK(on_Grayscale), NULL);
+    g_signal_connect(Hough, "clicked", G_CALLBACK(on_Hough), NULL);
+    g_signal_connect(Rotation, "clicked", G_CALLBACK(on_Rotation), NULL);
+    g_signal_connect(sudo, "clicked", G_CALLBACK(on_Sudoku), NULL);
 
     gtk_widget_show_all(window);
     image1 = NULL;

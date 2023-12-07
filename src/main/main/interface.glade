@@ -168,16 +168,14 @@ la mention ".txt" à la fin une erreur surviendra.</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <child>
-          <object class="GtkCheckButton" id="Flou">
+          <object class="GtkButton" id="Flou">
             <property name="label" translatable="yes">Flou</property>
             <property name="width-request">113</property>
             <property name="height-request">34</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
-            <signal name="toggled" handler="Flou_toggled_cb" swapped="no"/>
-            <signal name="toggled" handler="on_Flou_toggled" swapped="no"/>
+            <signal name="clicked" handler="Flou_toggled_cb" swapped="no"/>
           </object>
           <packing>
             <property name="x">640</property>
@@ -214,15 +212,14 @@ la mention ".txt" à la fin une erreur surviendra.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkCheckButton" id="Canny">
+          <object class="GtkButton" id="Canny">
             <property name="label" translatable="yes">Canny</property>
             <property name="width-request">113</property>
             <property name="height-request">34</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
-            <signal name="toggled" handler="on_Canny_toggled" swapped="no"/>
+            <signal name="clicked" handler="on_Canny_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">640</property>
@@ -230,15 +227,14 @@ la mention ".txt" à la fin une erreur surviendra.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkCheckButton" id="Grayscale">
+          <object class="GtkButton" id="Grayscale">
             <property name="label" translatable="yes">Grayscale</property>
             <property name="width-request">113</property>
             <property name="height-request">34</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
-            <signal name="toggled" handler="on_Grayscale_toggled" swapped="no"/>
+            <signal name="clicked" handler="on_Grayscale_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">640</property>
@@ -246,15 +242,14 @@ la mention ".txt" à la fin une erreur surviendra.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkCheckButton" id="Hough">
+          <object class="GtkButton" id="Hough">
             <property name="label" translatable="yes">Hough</property>
             <property name="width-request">113</property>
             <property name="height-request">34</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
-            <signal name="toggled" handler="on_Hough_toggled" swapped="no"/>
+            <signal name="clicked" handler="on_Hough_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">640</property>
@@ -262,31 +257,44 @@ la mention ".txt" à la fin une erreur surviendra.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkCheckButton" id="Rotation">
+          <object class="GtkButton" id="Rotation">
             <property name="label" translatable="yes">Rotation</property>
             <property name="width-request">113</property>
             <property name="height-request">33</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
-            <signal name="toggled" handler="on_Rotation_toggled" swapped="no"/>
+            <signal name="clicked" handler="on_Rotation_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">640</property>
             <property name="y">371</property>
           </packing>
-        </child>
+  </child>
+  <child>
+           <object class="GtkButton" id="Sudoku">
+             <property name="label" translatable="yes">Sudoku</property>
+             <property name="width-request">113</property>
+             <property name="height-request">33</property>
+             <property name="visible">True</property>
+             <property name="can-focus">True</property>
+             <property name="receives-default">False</property>
+             <signal name="clicked" handler="on_Sudoku_clicked" swapped="no"/>
+           </object>
+           <packing>
+             <property name="x">640</property>
+             <property name="y">475</property>
+           </packing>
+         </child>
         <child>
-          <object class="GtkCheckButton" id="Resultat">
+          <object class="GtkButton" id="Resultat">
             <property name="label" translatable="yes">Resultat</property>
             <property name="width-request">113</property>
             <property name="height-request">34</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
-            <signal name="toggled" handler="on_Resultat_toggled" swapped="no"/>
+            <signal name="clicked" handler="on_Resultat_clicked" swapped="no"/>
           </object>
           <packing>
             <property name="x">640</property>
