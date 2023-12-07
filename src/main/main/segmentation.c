@@ -7,6 +7,7 @@
 #include "includes/segmentation.h"
 #include <unistd.h>
 
+void crop_GTK(SDL_Surface* image, int* cx, int* cy);
 
 
 int *positions(int *array, int *length, double average)
@@ -157,10 +158,26 @@ void detection(SDL_Surface *image, SDL_Surface *seg)
         }
     }
     segmentation(seg, cx, cy);
+    crop_GTK(seg , cx, cy);
     free(cx);
     free(cy);
 }
+void crop_GTK(SDL_Surface* image, int* cx, int* cy)
+{
+    SDL_Surface* cropped = SDL_CreateRGBSurface(0, cx[9] - cx[0], cy[9] - cy[0], 32, 0, 0, 0, 0);
+    for (int y = cy[0]; y < cy[9] ; y++) {
+        for (int x = cx[0]; x < cx[9]; x++) {
+            Uint8 red, green, blue, alpha;
+            Uint32 pixel = get_pixel(image, y, x);
+            SDL_GetRGBA(pixel, image->format, &red, &green , &blue, &alpha);
+            put_pixel(cropped , y-cy[0] , x-cx[0], SDL_MapRGBA(image->format, red, green, blue, alpha)); 
+        }
 
+    }
+    save_image(cropped, "processed/crop.bmp");
+    SDL_FreeSurface(cropped);
+
+}
 void segmentation(SDL_Surface *image, int* xpos, int* ypos){
     char* str = malloc(13*sizeof(char));
     for (int y = 0; y < 9; y++) {

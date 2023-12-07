@@ -183,8 +183,8 @@ void on_Sudoku(GtkButton* button, gpointer user_data)
 	{
 		gtk_container_remove(GTK_CONTAINER(fixed), image1);
 	}
-	resize_image_GTK(load_image(file), "processed/resized.bmp");
-	char *filename = "processed/resized.bmp";
+	resize_image_GTK(load_image("processed/crop.bmp"), "processed/crop_resized.bmp");
+	char *filename = "processed/crop_resized.bmp";
 	image1 = gtk_image_new_from_file(filename);
 	gtk_container_add(GTK_CONTAINER(fixed), image1);
 	gtk_widget_show(image1);
