@@ -93,10 +93,15 @@ int main(int argc, char** argv)
 	Uint8 otsuThreshold = calculateOtsuThreshold(seg);
     binarize(seg, otsuThreshold);
     save_image(seg, "bin.bmp");
-    //SDL_Surface * nimage = load_image("sobel.bmp");
-    HoughTransform(hough);
+
+    int z = automaticrotation(hough);
+    if (z!=0)
+      {
+	hough = rotation(z,hough);
+	seg = rotation(z,hough);
+      }
     
-    //automaticrotation(hough, nimage);
+    HoughTransform(hough);
     save_image(hough,"hough.bmp");
     detection(hough, seg);
     save_image(hough, "detection.bmp");

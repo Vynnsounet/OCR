@@ -7,7 +7,7 @@ void HoughTransform(SDL_Surface *image);
 //void houghTransform(SDL_Surface *image);
 void drawLine(int x0, int y0, int x1, int y1, SDL_Surface * image);
 int HoughVerif(SDL_Surface* image);
-void automaticrotation(SDL_Surface * image, SDL_Surface * nimage);
+int automaticrotation(SDL_Surface * image);
 
 
 #endif

@@ -178,7 +178,7 @@ int HoughVerif(SDL_Surface * image)
 
 }
 
-void automaticrotation(SDL_Surface * image, SDL_Surface * nimage)
+int automaticrotation(SDL_Surface * image)
 {
   	HoughTransform(image);
   	int red = HoughVerif(image);
@@ -193,11 +193,6 @@ void automaticrotation(SDL_Surface * image, SDL_Surface * nimage)
 	   red = HoughVerif(image);
 	    
 	  }
-     
-	save_image(image, "hough");
-
-	SDL_Surface * rot = rotation(z+5,nimage);
-	save_image(rot, "rotate.bmp");
-	SDL_FreeSurface(rot);
+	return z+5;
 }
 
