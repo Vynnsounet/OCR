@@ -14,6 +14,7 @@ typedef struct
 } NeuralNetwork;
 
 NeuralNetwork *network_create(int input, int hidden, int output, double lr);
+int predict_number(NeuralNetwork *net, Img *img);
 void network_train(NeuralNetwork *net, Matrix *input_data, Matrix *output_data);
 void network_train_batch_imgs(NeuralNetwork *net, Img **imgs, int batch_size);
 Matrix *network_predict_img(NeuralNetwork *net, Img *img);
@@ -23,4 +24,3 @@ void network_save(NeuralNetwork *net, char *file_string);
 NeuralNetwork *network_load(char *file_string);
 void network_print(NeuralNetwork *net);
 void network_free(NeuralNetwork *net);
-
