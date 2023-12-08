@@ -39,4 +39,3 @@ Matrix *softmax(Matrix *m)
     }
     return mat;
 }
-

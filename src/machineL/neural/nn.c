@@ -118,6 +118,14 @@ double network_predict_imgs(NeuralNetwork *net, Img **imgs, int n)
     return 1.0 * n_correct / n;
 }
 
+int predict_number(NeuralNetwork *net, Img *img)
+{
+    Matrix *p = network_predict_img(net, img);
+    int r = matrix_argmax(p);
+    matrix_free(p);
+    return r;
+}
+
 Matrix *network_predict(NeuralNetwork *net, Matrix *input_data)
 {
     Matrix *hidden_inputs = dot(net->hidden_weights, input_data);
@@ -189,4 +197,3 @@ void network_free(NeuralNetwork *net)
     free(net);
     net = NULL;
 }
-

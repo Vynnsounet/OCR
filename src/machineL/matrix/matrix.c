@@ -47,7 +47,7 @@ void matrix_print(Matrix *m)
     {
         for (int j = 0; j < m->cols; j++)
         {
-            printf("%1.3f ", m->entries[i][j]);
+            printf("%c ", m->entries[i][j] > 0 ? '#' : '*');
         }
         printf("\n");
     }
@@ -173,4 +173,3 @@ Matrix *matrix_flatten(Matrix *m, int axis)
     }
     return mat;
 }
-
