@@ -316,21 +316,6 @@ la mention ".txt" à la fin une erreur surviendra.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="Download">
-            <property name="label" translatable="yes">Download</property>
-            <property name="width-request">105</property>
-            <property name="height-request">34</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <signal name="clicked" handler="on_Download_clicked" swapped="no"/>
-          </object>
-          <packing>
-            <property name="x">471</property>
-            <property name="y">600</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkButton" id="Help">
             <property name="label" translatable="yes">Help</property>
             <property name="width-request">108</property>

@@ -25,6 +25,7 @@ GtkWidget* window;
 GtkWidget* second_window;
 GtkWidget* Sudoku;
 char * file;
+int canClick = 0;
 // Signal handler for the "clicked" signal of the start button.
 int verif_filename(char *filename, const char *s)
 { 
@@ -85,7 +86,11 @@ void on_Help(GtkButton *button, gpointer user_data)
 
 void on_Start(GtkButton *button, gpointer user_data)
 {
-    process(file);
+    if(file)
+    {   
+        process(file);
+        canClick = 1;
+    }
     g_print("on_Start()\n");
 }
 
@@ -93,7 +98,7 @@ void on_Download(GtkButton *button, gpointer user_data)
 {
     
     
-    g_print("on_Download()\n");
+     g_print("on_Download()\n");
 }
 
 void on_Rotation(GtkButton* button, gpointer user_data)
@@ -102,55 +107,67 @@ void on_Rotation(GtkButton* button, gpointer user_data)
 }
 
 void on_Sobel(GtkButton* button, gpointer user_data)
-{
-	int hor = 41;
-	int ver = 32;
-	if(image1 != NULL)
-	{
-		gtk_container_remove(GTK_CONTAINER(fixed), image1);
-	}
-	resize_image_GTK(load_image("processed/sobel.bmp"), "processed/sobel_resized.bmp");
-	char *filename = "processed/sobel_resized.bmp";
-	image1 = gtk_image_new_from_file(filename);
-	gtk_container_add(GTK_CONTAINER(fixed), image1);
-	gtk_widget_show(image1);
-	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+{   if (canClick) {
 
-	g_print("on_Sobel()\n");
+
+    int hor = 41;
+    int ver = 32;
+    if(image1 != NULL)
+    {
+        gtk_container_remove(GTK_CONTAINER(fixed), image1);
+    }
+    resize_image_GTK(load_image("processed/sobel.bmp"), "processed/sobel_resized.bmp");
+    char *filename = "processed/sobel_resized.bmp";
+    image1 = gtk_image_new_from_file(filename);
+    gtk_container_add(GTK_CONTAINER(fixed), image1);
+    gtk_widget_show(image1);
+    gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+
+    g_print("on_Sobel()\n");
+
+    }
 }
 
 void on_Hough(GtkButton* button, gpointer user_data)
-{
-	int hor = 41;
-	int ver = 32;
-	if(image1 != NULL)
-		{
-			gtk_container_remove(GTK_CONTAINER(fixed), image1);
-			}
-	resize_image_GTK(load_image("processed/hough.bmp"), "processed/hough_resized.bmp");
-	char *filename = "processed/hough_resized.bmp";
-	image1 = gtk_image_new_from_file(filename);
-	gtk_container_add(GTK_CONTAINER(fixed), image1);
-	gtk_widget_show(image1);
-	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
-	g_print("on_Hough()\n");
+{   if (canClick) {
+
+
+    int hor = 41;
+    int ver = 32;
+    if(image1 != NULL)
+    {
+        gtk_container_remove(GTK_CONTAINER(fixed), image1);
+    }
+    resize_image_GTK(load_image("processed/hough.bmp"), "processed/hough_resized.bmp");
+    char *filename = "processed/hough_resized.bmp";
+    image1 = gtk_image_new_from_file(filename);
+    gtk_container_add(GTK_CONTAINER(fixed), image1);
+    gtk_widget_show(image1);
+    gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+    g_print("on_Hough()\n");
+
+                  }
 }
 
 void on_Flou(GtkButton* button, gpointer user_data)
-{
-	int hor = 41;
-	int ver = 32;
-	if(image1 != NULL)
-	{
-		gtk_container_remove(GTK_CONTAINER(fixed), image1);
-	}
-	resize_image_GTK(load_image("processed/gauss.bmp"), "processed/gauss_resized.bmp");
-	char *filename = "processed/gauss_resized.bmp";
-	image1 = gtk_image_new_from_file(filename);
-	gtk_container_add(GTK_CONTAINER(fixed), image1);
-	gtk_widget_show(image1);
-	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
-	g_print("on_Flou()\n");
+{ if (canClick) {
+
+
+    int hor = 41;
+    int ver = 32;
+    if(image1 != NULL)
+    {
+        gtk_container_remove(GTK_CONTAINER(fixed), image1);
+    }
+    resize_image_GTK(load_image("processed/gauss.bmp"), "processed/gauss_resized.bmp");
+    char *filename = "processed/gauss_resized.bmp";
+    image1 = gtk_image_new_from_file(filename);
+    gtk_container_add(GTK_CONTAINER(fixed), image1);
+    gtk_widget_show(image1);
+    gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+    g_print("on_Flou()\n");
+
+                }
 }
 
 void on_Resultat(GtkButton* button, gpointer user_data)
@@ -159,37 +176,44 @@ void on_Resultat(GtkButton* button, gpointer user_data)
 }
 
 void on_Grayscale(GtkButton* button, gpointer user_data)
-{
-	int hor = 41;
-	int ver = 32;
-	if(image1 != NULL)
-	{
-		gtk_container_remove(GTK_CONTAINER(fixed), image1);
-	}
-	resize_image_GTK(load_image("processed/grayscale.bmp"), "processed/grayscale_resized.bmp");
-	char *filename = "processed/grayscale_resized.bmp";
-	image1 = gtk_image_new_from_file(filename);
-	gtk_container_add(GTK_CONTAINER(fixed), image1);
-	gtk_widget_show(image1);
-	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
-	g_print("on_Grayscale()\n");
+{   if (canClick) {
+
+
+    int hor = 41;
+    int ver = 32;
+    if(image1 != NULL)
+    {
+        gtk_container_remove(GTK_CONTAINER(fixed), image1);
+    }
+    resize_image_GTK(load_image("processed/grayscale.bmp"), "processed/grayscale_resized.bmp");
+    char *filename = "processed/grayscale_resized.bmp";
+    image1 = gtk_image_new_from_file(filename);
+    gtk_container_add(GTK_CONTAINER(fixed), image1);
+    gtk_widget_show(image1);
+    gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+    g_print("on_Grayscale()\n");
+
+                  }
 }
 
 void on_Sudoku(GtkButton* button, gpointer user_data)
-{
-	int hor = 41;
-	int ver = 32;
-	if(image1 != NULL)
-	{
-		gtk_container_remove(GTK_CONTAINER(fixed), image1);
-	}
-	resize_image_GTK(load_image("processed/crop.bmp"), "processed/crop_resized.bmp");
-	char *filename = "processed/crop_resized.bmp";
-	image1 = gtk_image_new_from_file(filename);
-	gtk_container_add(GTK_CONTAINER(fixed), image1);
-	gtk_widget_show(image1);
-	gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
-	g_print("on_Sudoku()\n)");
+{if (canClick) {
+
+
+    int hor = 41;
+    int ver = 32;
+    if(image1 != NULL)
+    {
+        gtk_container_remove(GTK_CONTAINER(fixed), image1);
+    }
+    resize_image_GTK(load_image("processed/crop.bmp"), "processed/crop_resized.bmp");
+    char *filename = "processed/crop_resized.bmp";
+    image1 = gtk_image_new_from_file(filename);
+    gtk_container_add(GTK_CONTAINER(fixed), image1);
+    gtk_widget_show(image1);
+    gtk_fixed_move(GTK_FIXED(fixed), image1, hor, ver);
+    g_print("on_Sudoku()\n)");
+               }
 }
 
 int main (int argc, char *argv[])
@@ -209,7 +233,6 @@ int main (int argc, char *argv[])
     second_window = GTK_WIDGET(gtk_builder_get_object(builder, "second_window"));
     GtkFileChooserButton* file = GTK_FILE_CHOOSER_BUTTON(gtk_builder_get_object(builder, "file"));
     GtkButton* Start = GTK_BUTTON(gtk_builder_get_object(builder, "Start"));
-    GtkButton* Download = GTK_BUTTON(gtk_builder_get_object(builder, "Download"));
     GtkButton* Help = GTK_BUTTON(gtk_builder_get_object(builder, "Help"));
     GtkButton* Flou = GTK_BUTTON(gtk_builder_get_object(builder, "Flou"));
     GtkButton* Canny = GTK_BUTTON(gtk_builder_get_object(builder, "Canny"));
@@ -227,7 +250,6 @@ int main (int argc, char *argv[])
     g_signal_connect(file, "file_set", G_CALLBACK(on_file_file_set), NULL);
     g_signal_connect(Help, "clicked", G_CALLBACK(on_Help), NULL);
     g_signal_connect(Start, "clicked", G_CALLBACK(on_Start), NULL);
-    g_signal_connect(Download, "clicked", G_CALLBACK(on_Download), NULL);
     g_signal_connect(Flou, "clicked", G_CALLBACK(on_Flou), NULL);
     g_signal_connect(Canny, "clicked", G_CALLBACK(on_Sobel), NULL);
     g_signal_connect(Resultat, "clicked", G_CALLBACK(on_Resultat), NULL);
